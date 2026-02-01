@@ -1,0 +1,23 @@
+# macOS junk files
+**/.DS_Store
+
+# IDE / editor configs
+.vscode
+
+# Logs
+*.log
+
+# Build outputs
+build
+lib/**
+**/*.o
+**/fastrg
+**/fastrg_northbound
+**/.libs
+unit_test/unit-tester
+**/fastrg_cli
+**/libfastrg_northbound.a
+**/*.pb.*
+
+# Generated source
+src/version.h

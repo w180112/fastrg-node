@@ -1,0 +1,9 @@
+[submodule "lib/libutil"]
+	path = lib/libutil
+	url = https://github.com/w180112/libutil.git
+[submodule "lib/dpdk"]
+	path = lib/dpdk
+	url = git://dpdk.org/dpdk-stable
+[submodule "lib/dpdk-kmods"]
+	path = lib/dpdk-kmods
+	url = https://dpdk.org/git/dpdk-kmods

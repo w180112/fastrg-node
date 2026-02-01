@@ -1,0 +1,28 @@
+name: libutils ci
+on:
+  push: 
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt-get update && sudo apt install git gcc make libtool-bin
+    - run: autoreconf --install
+    - run: ${{ github.workspace }}/configure
+    - run: cd ${{ github.workspace }} && make && sudo make install
+    - run: cd ${{ github.workspace }} && sudo make uninstall
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt-get update && sudo apt install git gcc make libtool-bin
+    - run: autoreconf --install
+    - run: ${{ github.workspace }}/configure
+    - run: cd ${{ github.workspace }} && make && sudo make install && sudo ldconfig
+    - run: cd ${{ github.workspace }}/unit_test && make
+    - run: ${{ github.workspace }}/unit_test/unit-tester
+    - run: cd ${{ github.workspace }} && sudo make uninstall

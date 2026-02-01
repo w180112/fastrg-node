@@ -1,0 +1,19 @@
+name: 'Setup Build Environment'
+description: 'Sets up the build environment for FastRG'
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Docker
+      run: |
+        if ! command -v docker >/dev/null 2>&1; then
+          echo "Docker not found — attempting install"
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+        else
+          echo "Docker already installed: $(docker --version)"
+        fi
+      shell: bash
+    - name: Install Build Essentials
+      run: |
+        sudo ./essentials.sh
+      shell: bash

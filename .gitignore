@@ -1,0 +1,14 @@
+**/.DS_Store
+.vscode
+*.log
+build
+**/*.o
+**/fastrg
+**/fastrg_northbound
+**/.libs
+unit_test/unit-tester
+**/fastrg_cli
+**/libfastrg_northbound.a
+**/*.pb.*
+src/version.h
+northbound/controller/proto
