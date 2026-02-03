@@ -65,7 +65,7 @@ For using FastRG system data plane in Docker,
 	# docker build --no-cache -t fastrg:latest .
 	# mount -t hugetlbfs -o pagesize=1G none /dev/hugepages1G
 	# docker run -d --net=host --privileged -v /sys/bus/pci/devices:/sys/bus/pci/devices \
-	-v /sys/kernel/mm/hugepages:/sys/kernel/mm/hugepages -v /sys/devices/system/node:/sys/devices/system/node -v /dev:/dev fastrg:latest
+	-v /sys/kernel/mm/hugepages:/sys/kernel/mm/hugepages -v /sys/devices/system/node:/sys/devices/system/node -v /dev:/dev -v /etc/fastrg:/etc/fastrg fastrg:latest
 
 ### SDN mode(Control plane + Data plane)
 
