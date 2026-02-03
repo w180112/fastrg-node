@@ -117,7 +117,7 @@ int main() {
 
     // Initialize etcd client
     const char* etcd_endpoints = "http://127.0.0.1:2379";
-    etcd_status_t status = etcd_client_init(etcd_endpoints);
+    etcd_status_t status = etcd_client_init(etcd_endpoints, nullptr);
 
     if (status != ETCD_SUCCESS) {
         std::cerr << "Failed to initialize etcd client" << std::endl;
@@ -130,7 +130,7 @@ int main() {
     const char* test_node_uuid = "test-node-12345";
     status = etcd_client_start_watch(test_node_uuid, hsi_config_callback, 
         pppoe_command_callback, user_count_changed_callback, 
-        sync_request_callback, nullptr);
+        sync_request_callback);
 
     if (status != ETCD_SUCCESS) {
         std::cerr << "Failed to start etcd watching" << std::endl;

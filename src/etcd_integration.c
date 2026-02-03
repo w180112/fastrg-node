@@ -332,7 +332,7 @@ STATUS etcd_integration_init(FastRG_t *fastrg_ccb)
     if (!fastrg_ccb)
         return ERROR;
 
-    etcd_status_t status = etcd_client_init(fastrg_ccb->etcd_endpoints);
+    etcd_status_t status = etcd_client_init(fastrg_ccb->etcd_endpoints, (void *)fastrg_ccb);
     if (status != ETCD_SUCCESS) {
         FastRG_LOG(ERR, fastrg_ccb->fp, NULL, NULL, "Failed to initialize etcd client with endpoints: %s", fastrg_ccb->etcd_endpoints);
         return ERROR;
@@ -391,8 +391,7 @@ STATUS etcd_integration_start(FastRG_t *fastrg_ccb)
         hsi_config_changed_callback, 
         pppoe_command_received_callback,
         user_count_changed_callback,
-        sync_request_callback,
-        fastrg_ccb);
+        sync_request_callback);
 
     if (status != ETCD_SUCCESS) {
         FastRG_LOG(ERR, fastrg_ccb->fp, NULL, NULL, "Failed to start etcd watching for node: %s", fastrg_ccb->node_uuid);

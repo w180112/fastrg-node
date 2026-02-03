@@ -34,6 +34,7 @@ RUN mkdir -p /var/log/fastrg && mkdir -p /var/run/fastrg \
 
 VOLUME /var/log/fastrg
 VOLUME /var/run/fastrg
+VOLUME /etc/fastrg
 
 ENTRYPOINT ["/usr/local/bin/fastrg"]
 CMD ["-l", "0-7", "-n", "4"]

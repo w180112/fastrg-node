@@ -194,8 +194,9 @@ public:
         });
     }
 
-    etcd_status_t init(const char* etcd_endpoints) {
+    etcd_status_t init(const char* etcd_endpoints, void* user_data) {
         try {
+            fastrg_ccb = (FastRG_t *)user_data;
             etcd_endpoints_ = etcd_endpoints;  // Store endpoints for reconnection
             client_ = std::make_unique<etcd::Client>(etcd_endpoints);
 
@@ -224,8 +225,7 @@ public:
         hsi_config_callback_t hsi_callback,
         pppoe_command_callback_t command_callback,
         user_count_changed_callback_t user_count_callback,
-        sync_request_callback_t sync_request_callback,
-        void* user_data) {
+        sync_request_callback_t sync_request_callback) {
 
         if (!client_) {
             return ETCD_ERROR;
@@ -236,7 +236,6 @@ public:
         command_callback_ = command_callback;
         user_count_callback_ = user_count_callback;
         sync_request_callback_ = sync_request_callback;
-        fastrg_ccb = (FastRG_t *)user_data;
         watch_running_ = true;
 
         return create_watchers();
@@ -1595,10 +1594,10 @@ static std::unique_ptr<EtcdClientImpl> g_etcd_client = nullptr;
 
 extern "C" {
 
-etcd_status_t etcd_client_init(const char* etcd_endpoints) {
+etcd_status_t etcd_client_init(const char* etcd_endpoints, void* user_data) {
     try {
         g_etcd_client = std::make_unique<EtcdClientImpl>();
-        return g_etcd_client->init(etcd_endpoints);
+        return g_etcd_client->init(etcd_endpoints, user_data);
     } catch (const std::exception& e) {
         std::cerr << "Failed to initialize etcd client: " << e.what() << std::endl;
         return ETCD_ERROR;
@@ -1609,14 +1608,13 @@ etcd_status_t etcd_client_start_watch(const char* node_uuid,
     hsi_config_callback_t hsi_callback,
     pppoe_command_callback_t command_callback,
     user_count_changed_callback_t user_count_callback,
-    sync_request_callback_t sync_request_callback,
-    void* user_data) {
+    sync_request_callback_t sync_request_callback) {
 
     if (!g_etcd_client) {
         return ETCD_ERROR;
     }
     return g_etcd_client->start_watch(node_uuid, hsi_callback, 
-        command_callback, user_count_callback, sync_request_callback, user_data);
+        command_callback, user_count_callback, sync_request_callback);
 }
 
 void etcd_client_stop_watch(void) {

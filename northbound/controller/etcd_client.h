@@ -82,15 +82,14 @@ typedef STATUS (*user_count_changed_callback_t)(const char *node_id,
 typedef void (*sync_request_callback_t)(const char *node_id, void *user_data);
 
 /* Initialize etcd client */
-etcd_status_t etcd_client_init(const char *etcd_endpoints);
+etcd_status_t etcd_client_init(const char *etcd_endpoints, void* user_data);
 
 /* Start watching etcd for changes */
 etcd_status_t etcd_client_start_watch(const char *node_uuid,
     hsi_config_callback_t hsi_callback,
     pppoe_command_callback_t command_callback,
     user_count_changed_callback_t user_count_callback,
-    sync_request_callback_t sync_request_callback,
-    void* user_data);
+    sync_request_callback_t sync_request_callback);
 
 /* Stop watching etcd */
 void etcd_client_stop_watch(void);
